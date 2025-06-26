@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hitmen Records</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #121212; color: #fff; }
+        .upload-box { background: #1e1e1e; padding: 10px; margin: 10px; border-radius: 8px; }
+        img, video { max-width: 100%; height: auto; }
+        .like-btn, .comment-box { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🎧 Hitmen Records</h1>
+    <a href="/upload">Upload Media</a>
+    <hr>
+    {% for item in media_db %}
+        <div class="upload-box">
+            <h3>{{ item.username }} uploaded:</h3>
+            {% if item.filename.endswith('.jpg') or item.filename.endswith('.png') %}
+                <img src="{{ url_for('static', filename='uploads/' + item.filename) }}">
+            {% elif item.filename.endswith('.mp4') or item.filename.endswith('.mov') %}
+                <video controls>
+                    <source src="{{ url_for('static', filename='uploads/' + item.filename) }}">
+                </video>
+            {% else %}
+                <a href="{{ url_for('static', filename='uploads/' + item.filename) }}">Download {{ item.filename }}</a>
+            {% endif %}
+
+            <form method="POST" action="/like/{{ loop.index0 }}">
+                <button class="like-btn">👍 Like ({{ item.likes }})</button>
+            </form>
+
+            <form method="POST" action="/comment/{{ loop.index0 }}">
+                <input type="text" name="comment" placeholder="Add a comment">
+                <button>Post</button>
+            </form>
+
+            <strong>Comments:</strong>
+            <ul>
+                {% for comment in item.comments %}
+                    <li>{{ comment }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</body>
+</html>

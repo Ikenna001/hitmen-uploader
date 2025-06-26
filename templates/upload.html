@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload to Hitmen Records</title>
+</head>
+<body>
+    <h2>Upload Your Media</h2>
+    <form method="post" enctype="multipart/form-data">
+        <label>Your Name:</label>
+        <select name="username">
+            {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Select File:</label>
+        <input type="file" name="file"><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+    <br><a href="/">Back to Home</a>
+</body>
+</html>
