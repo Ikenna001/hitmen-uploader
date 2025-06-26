@@ -1,0 +1,5 @@
+type: web
+name: hitmen-uploader
+env: python
+buildCommand: pip install -r requirements.txt
+startCommand: python app.py
